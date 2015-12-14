@@ -148,7 +148,7 @@ class UserController extends Controller {
             $this->loginRequest = $user->auth($login, $password);
             
             if ($user->isAuth() && password_verify($password, $this->loginRequest["password"])) {
-                header("Location: ?controller=default&action=index&login=" . $this->loginRequest["login"]);
+                header("Location: ?controller=default&action=mesoffres");
             }
             
             if (!password_verify($password, $this->loginRequest["password"])) {
@@ -208,6 +208,32 @@ class UserController extends Controller {
         $this->templateData['title'] = "MODIFIER PROFIL";
         $this->title = "MODIFIER PROFIL";
         
+        $user = new UserModel();
+        
+        $this->profil = $user->listUser($_SESSION['login'], $_SESSION['password']);
+             
+        if (!$user->isAuth()) {
+            header("Location: ?controller=user&action=login");
+        }
+        
+        $this->template = "views/modifierprofil.html.php";
+    }
+    
+    /**
+     * modifierprofilAction()
+     * Permet de modifier les informations de l'utilisateur connecté
+     */
+    public function updateprofilAction()
+    {
+        $user = new UserModel();
+        
+        $this->profil = $user->listUser($_SESSION['login'], $_SESSION['password']);
+             
+        if (!$user->isAuth()) {
+            header("Location: ?controller=user&action=login");
+        }
+        
+        header("Location: ?controller=user&action=profil&modif");
         
         $this->template = "views/modifierprofil.html.php";
     }

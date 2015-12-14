@@ -19,6 +19,8 @@ class Model {
         
         if (empty($this->db)) {
             $this->db = new PDO("mysql:host=" . $config["db_host"] . ";dbname=" . $config["db_name"], $config["db_login"], $config["db_password"]);
+            $this->db->query("SET NAMES UTF8");
+            setlocale(LC_TIME, 'fra_fra');
         }
     }
     

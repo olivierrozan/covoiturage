@@ -26,10 +26,10 @@
 <form action="?controller=user&action=login" method="POST">
     
     <label>Login ou Email : </label><br>
-    <input type="text" name="login"/><br><br>
+    <input type="text" name="login" value="orozan"/><br><br>
     
     <label>Mot de Passe : </label><br>
-    <input type="password" name="password"/><br><br>
+    <input type="password" name="password" value="OzTprP"/><br><br>
     
     <input type="submit" name="LOGIN"/>
 </form>
