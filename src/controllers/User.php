@@ -22,6 +22,11 @@ class UserController extends Controller {
      */
     public function createuserAction()
     {
+        /*$user = new UserModel();
+        if (!$user->isAuth()) {
+            header("Location: ?controller=user&action=login");
+        }*/
+        
         $this->templateData["title"] = "Nouvel Utilisateur";
         $this->templateData["formAction"] = "?controller=user&action=insert";
         
@@ -41,6 +46,9 @@ class UserController extends Controller {
         $this->title = "Created";
                 
         $user = new UserModel();
+        if (!$user->isAuth()) {
+            header("Location: ?controller=user&action=login");
+        }
         
         $email = htmlspecialchars($_POST["Email"]);
         $nom = htmlspecialchars($_POST["Nom"]);
@@ -246,6 +254,11 @@ class UserController extends Controller {
     {
         $this->templateData['title'] = "Modifier Mot De Passe";
         $this->title = "Modifier Mot De Passe";
+        
+        $user = new UserModel();
+        if (!$user->isAuth()) {
+            header("Location: ?controller=user&action=login");
+        }
                 
         $this->template = "views/modifiermotdepasse.html.php";
     }
@@ -260,6 +273,9 @@ class UserController extends Controller {
         $this->title = "Modifier Mot De Passe";
         
         $user = new UserModel();
+        if (!$user->isAuth()) {
+            header("Location: ?controller=user&action=login");
+        }
         
         $password = htmlspecialchars($_POST["password"]);
         $password2 = htmlspecialchars($_POST["confirmPassword"]);

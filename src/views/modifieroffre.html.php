@@ -4,7 +4,7 @@
     ?>
 </h1>
 
-<form action="?controller=default&action=insertoffre" method="POST">
+<form action="?controller=default&action=updateoffre&id=<?php echo $_GET['id']; ?>" method="POST">
     
     <label for="periode">Période</label><br>
     <select id="periode" name="periode" data-role="slider" data-inline="true">
@@ -47,9 +47,9 @@
         <input id="depart" type="text" name="depart" value="place"/><br>
     </div>
     
-    <div class="retour">
-        <br><label for="retour">Retour</label><br>
-        <input id="retour" type="text" name="retour" value="place"/><br>
+    <div class="arrivee">
+        <br><label for="arrivee">Arrivee</label><br>
+        <input id="arrivee" type="text" name="arrivee" value="place"/><br>
     </div><br>
     
     <input type="submit" value="ok"/>
