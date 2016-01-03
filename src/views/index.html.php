@@ -15,7 +15,7 @@
         <a href='index.php?controller=user&action=createuser'><button>S'inscrire</button></a>
     </p>
     
-    <form action="?controller=default&action=offres" method="POST">
+    <form action="?controller=offers&action=offres" method="POST">
         <div class="depart">
             <label for="depart">Départ</label><br>
             <input id="depart" type="text" name="villeDepart" placeholder="départ"/>

@@ -4,7 +4,7 @@
     ?>
 </h1>
 
-<form action="?controller=default&action=insertoffre" method="POST">
+<form action="?controller=offers&action=insertoffre" method="POST">
     
     <label for="periode">Période</label><br>
     <select id="periode" name="periode" data-role="slider" data-inline="true">
@@ -48,16 +48,18 @@
     </div>
     
     <div class="retour">
-        <br><label for="retour">Retour</label><br>
-        <input id="retour" type="text" name="retour" value="place"/><br>
+        <br><label for="retour">Arrivee</label><br>
+        <input id="retour" type="text" name="arrivee" value="place"/><br>
+    </div><br>
+    
+    <div class="ramassages">
+        <input id="ajouterRamassageButton" type="button" value="Ajouter ramassage"/>
+        <input id="supprimerRamassageButton" type="button" value="Supprimer ramassage"/><br>
     </div><br>
     
     <input type="submit" value="ok"/>
+    <input type="button" onclick="window.location='index.php?controller=offers&action=mesoffres'" value="annuler"/>
 </form>
-
-<p>
-	<a href='index.php?controller=default&action=mesoffres'><button>Annuler</button></a>
-</p>
 
 <script>
     $(function(){        
@@ -82,6 +84,22 @@
         
         $("#minute").change(function () {
             $("#numMinute").text($(this).val());
+        });
+        
+        $("#ajouterRamassageButton").on("click", function() {
+            var ram = '<div class="ramassage">';
+            ram += '<br><label">Adresse</label><br>';
+            ram += '<input type="text" name="ramassage[]" value="placeRamassage"/><br>';
+            ram += '</div>';
+        
+            $(".ramassages").append(ram);
+            
+        });
+        
+        $("#supprimerRamassageButton").on("click", function() {
+            if ($(".ramassage").length > 0) {
+                $(".ramassage").last().remove();
+            }
         });
     });
 </script>

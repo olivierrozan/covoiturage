@@ -11,7 +11,7 @@
  *
  * @author rozan_000
  */
-class DefaultModel extends Model {
+class OffersModel extends Model {
     
     public function listOffres($depart, $arrivee)
     {
@@ -35,7 +35,7 @@ class DefaultModel extends Model {
         $query = "
             SELECT * 
             FROM user u, offre o, ramassagesparoffre ro, ramassage r 
-            WHERE o.idUser = u.id AND o.idRamassageOffre = ro.idOffre AND ro.idRamassage = r.id AND o.id = ?
+            WHERE o.idUser = u.id AND ro.idOffre = o.id AND ro.idRamassage = r.id AND o.id = ?
         ";
         
         $result = $this->dbQuery($query, array($id))->fetchAll();
@@ -48,8 +48,8 @@ class DefaultModel extends Model {
         //$query = "SELECT * FROM offre WHERE idUser = ?";
         $query = "
             SELECT * 
-            FROM offre o, passagersparoffre ro, passager r 
-            WHERE o.idPassagerOffre = ro.idOffre AND ro.idUser = r.id AND o.id = ?
+            FROM offre o, passagersparoffre po, passager p 
+            WHERE po.idOffre = o.id AND po.idPassager = p.id AND o.id = ?
         ";
         
         $result = $this->dbQuery($query, array($id))->fetchAll();
@@ -59,11 +59,10 @@ class DefaultModel extends Model {
     
     public function listPassagerRamassage($id)
     {
-        //$query = "SELECT * FROM offre WHERE idUser = ?";
         $query = "
             SELECT * 
-            FROM ramassage o, passagersparoffre ro, passager r 
-            WHERE o.idPassagerOffre = ro.idOffre AND ro.idUser = r.id AND o.id = ?
+            FROM offre o, ramassagesparoffre ro, ramassage r, passagersparramassage pr, passager p 
+            WHERE ro.idOffre = o.id AND ro.idRamassage = r.id AND pr.idRamassage = r.id AND pr.idPassager = p.id AND o.id = ?
         ";
         
         $result = $this->dbQuery($query, array($id))->fetchAll();
@@ -91,9 +90,58 @@ class DefaultModel extends Model {
         $this->dbQuery($query, array($id));
     }
     
+    public function listRamassageParOffre($id)
+    {
+        $query = "SELECT o.id as idOffre, r.id as idRam "
+                . "FROM offre o, ramassage r, ramassagesparoffre ro "
+                . "WHERE ro.idOffre = o.id "
+                . "AND ro.idRamassage = r.id "
+                . "AND o.id = ?";
+        
+        $result = $this->dbQuery($query, array($id))->fetchAll();
+        return $result;
+    }
+    
+    public function deleteRamassage($id)
+    {
+        $query = "DELETE FROM ramassage WHERE id = ?";
+        $this->dbQuery($query, array($id));
+    }
+    
+    public function deleteRamassageParOffre($id)
+    {
+        $query = "DELETE FROM ramassagesparoffre WHERE idOffre = ?";
+        $this->dbQuery($query, array($id));
+    }
+    
+    public function insertRamassage($ramassage)
+    {
+        $query = "INSERT INTO ramassage (ville) VALUES (?)";
+        $this->dbQuery($query, array($ramassage));
+    }
+    
     public function insertOffre($jour, $date, $heure, $depart, $retour)
     {
         $query = "INSERT INTO offre (idUser, jour, date, heure, villeDepart, villeArrivee) VALUES (?, ?, ?, ?, ?, ?)";
         $this->dbQuery($query, array($_SESSION['uid'], $jour, $date, $heure, $depart, $retour));
+        
+        $query3 = "SELECT MAX(o.id) FROM offre o";
+        $result = $this->dbQuery($query3)->fetch();
+
+        return $result;
+    }
+    
+    public function listRamassages($nb)
+    {
+        $query = "SELECT id FROM ramassage ORDER BY id DESC LIMIT " . $nb;
+        $result = $this->dbQuery($query)->fetchAll();
+        
+        return $result;
+    }
+    
+    public function insertRamassageOffre($a, $b)
+    {
+        $query = "INSERT INTO ramassagesparoffre(idOffre, idRamassage) VALUES (?, ?)";
+        $this->dbQuery($query, array($a, $b));
     }
 }

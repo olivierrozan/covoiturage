@@ -24,6 +24,6 @@
 
 <p>
 	<a href='index.php?controller=user&action=logout'><button>Logout</button></a>
-    <a href='index.php?controller=default&action=index'><button>Retour Index</button></a>
+    <a href='index.php?controller=offers&action=index'><button>Retour Index</button></a>
     <a href='index.php?controller=user&action=modifierprofil'><button>Modifier profil</button></a>
 </p>

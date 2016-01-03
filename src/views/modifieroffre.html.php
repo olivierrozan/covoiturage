@@ -4,7 +4,7 @@
     ?>
 </h1>
 
-<form action="?controller=default&action=updateoffre&id=<?php echo $_GET['id']; ?>" method="POST">
+<form action="?controller=offers&action=updateoffre&id=<?php echo $_GET['id']; ?>" method="POST">
     
     <label for="periode">Période</label><br>
     <select id="periode" name="periode" data-role="slider" data-inline="true">
@@ -56,7 +56,7 @@
 </form>
 
 <p>
-	<a href='index.php?controller=default&action=mesoffres'><button>Annuler</button></a>
+	<a href='index.php?controller=offers&action=mesoffres'><button>Annuler</button></a>
 </p>
 
 <script>

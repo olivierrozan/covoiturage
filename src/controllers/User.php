@@ -68,7 +68,6 @@ class UserController extends Controller {
         
         if ($this->validate($nom, $prenom, $email, $telephone) && !$check) {
             $user->Created($email, $nom, $prenom, $telephone, $password);
-        
             $this->sendMail($login, $password, $email);
         
             header('Location: ?controller=user&action=confirm');
@@ -129,9 +128,8 @@ class UserController extends Controller {
     {
         $this->templateData['title'] = "Nouvel utilisateur créé";
         
-        $user = new UserModel();
-        
-        /*if (!$user->isAuth()) {
+        /*$user = new UserModel();
+        if (!$user->isAuth()) {
             header("Location: ?controller=user&action=login");
         }*/
         
@@ -149,14 +147,15 @@ class UserController extends Controller {
 
         $user = new UserModel();
         
-        if (isset($_POST['login']) && isset($_POST['password'])) {
+        
+            
+        if (isset($_POST["login"]) && isset($_POST["password"])) {
             $login = htmlspecialchars($_POST["login"]);
             $password = htmlspecialchars($_POST["password"]);
-            
             $this->loginRequest = $user->auth($login, $password);
             
             if ($user->isAuth() && password_verify($password, $this->loginRequest["password"])) {
-                header("Location: ?controller=default&action=mesoffres");
+                header("Location: ?controller=offers&action=mesoffres");
             }
             
             if (!password_verify($password, $this->loginRequest["password"])) {
@@ -281,7 +280,7 @@ class UserController extends Controller {
         $password2 = htmlspecialchars($_POST["confirmPassword"]);
         
         if ($this->validatePassword($password, $password2)) {
-            header('Location: ?controller=default&action=index&modifmdp');
+            header('Location: ?controller=offers&action=index&modifmdp');
         } 
         
         $this->template = "views/modifiermotdepasse.html.php";

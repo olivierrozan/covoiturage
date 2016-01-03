@@ -42,7 +42,7 @@ class UserModel extends Model {
         //$result = $this->dbQuery($query, array($email, $login, $password, $nom, $prenom, $tel));
     }
     
-    public function listUser($login, $password)
+    public function listUser($login)
     {
         $query = "SELECT * FROM user WHERE login = ? OR email = ?";
         $result = $this->dbQuery($query, array($login, $login))->fetch();

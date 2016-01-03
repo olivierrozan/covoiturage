@@ -13,7 +13,7 @@
         } else {
             echo "<a href='index.php?controller=user&action=login'><button>Se Connecter</button></a>";
         }
-        
+        echo "<a href='index.php?controller=offers&action=index'><button>Recherche</button></a>";
         echo $content;
         ?>
     </body>
