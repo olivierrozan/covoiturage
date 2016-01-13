@@ -18,19 +18,45 @@ class UserModel extends Model {
     
     public function auth($login, $password)
     {
-        $query = "SELECT * FROM " . $this->table . " WHERE login = ? AND password = ?";
-        $result = $this->dbQuery($query, array($login, $password))->fetch();
+        $query = "SELECT * FROM " . $this->table . " WHERE login = ? OR email = ?";
+        $result = $this->dbQuery($query, array($login, $login))->fetch();
         
         if (!empty($result)) {
             $_SESSION["uid"] = $result["id"];
+            $_SESSION["login"] = $login;
+            $_SESSION["password"] = $password;
         }
+        
+        return $result;
     }
     
-    public function Created($email, $nom, $prenom, $tel)
+    public function Created($email, $nom, $prenom, $tel, $password)
     {
         $query = "INSERT INTO user (email, login, password, nom, prenom, tel) VALUES (?, ?, ?, ?, ?, ?)";
         
-        $login = $prenom[0].$nom;
+        $login = $this->login($prenom, $nom);
+        //$mdp = $this->password();
+        $hashPassword = password_hash($password, PASSWORD_BCRYPT, ['cost' => 10]);
+        
+        $result = $this->dbQuery($query, array($email, $login, $hashPassword, $nom, $prenom, $tel));
+        //$result = $this->dbQuery($query, array($email, $login, $password, $nom, $prenom, $tel));
+    }
+    
+    public function listUser($login)
+    {
+        $query = "SELECT * FROM user WHERE login = ? OR email = ?";
+        $result = $this->dbQuery($query, array($login, $login))->fetch();
+        
+        return $result;
+    }
+    
+    public function login($prenom, $nom)
+    {        
+        return $prenom[0].$nom;
+    }
+    
+    public function password()
+    {
         $mdp = "";
 
         for ($i = 1; $i <= 6; $i++) {
@@ -41,8 +67,6 @@ class UserModel extends Model {
             $mdp = $mdp.chr($n);
         }
         
-        $result = $this->dbQuery($query, array($email, $login, $mdp, $nom, $prenom, $tel));
-        
-        return $result;
+        return $mdp;
     }
 }

@@ -4,7 +4,7 @@ session_start();
 require_once($rootPath . "controllers/Controller.php");
 require_once($rootPath . "models/model.php");
 
-$controller = "Default";
+$controller = "Offers";
 $action = "indexAction";
 
 if (isset($_REQUEST['controller'])) {
