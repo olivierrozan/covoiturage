@@ -1,33 +1,44 @@
-<h1>
-    <?php 
-    echo $title;
-    ?>
-</h1>
+<script type="text/javascript">
+    $(function(){        
+        $("#rechercheDepart, #rechercheArrivee").geocomplete()
+                  .bind("geocode:result", function(event, result){
+                    $.log("Result: " + result.formatted_address);
+                  })
+                  .bind("geocode:error", function(event, status){
+                    $.log("ERROR: " + status);
+                  })
+                  .bind("geocode:multiple", function(event, results){
+                    $.log("Multiple: " + results.length + " results found");
+                  });
+    });
+</script>
 
-<section>
-    <p>
-        <?php
-        if (!isset($_SESSION['uid'])) {
-            echo "<a href='index.php?controller=user&action=login'><button>Se connecter</button></a>";
-        }
-        ?>
-        
-        <a href='index.php?controller=user&action=createuser'><button>S'inscrire</button></a>
-    </p>
-    
-    <form action="?controller=offers&action=offres" method="POST">
-        <div class="depart">
-            <label for="depart">Départ</label><br>
-            <input id="depart" type="text" name="villeDepart" placeholder="départ"/>
-        </div>
+<section id="about-section" class="about-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    <?php 
+                    echo $title;
+                    ?>
+                </h1>
+            </div>
+            
+            <form action="?controller=offers&action=offres" method="POST">
+                <div class="depart">
+                    <label for="rechercheDepart">Départ</label><br>
+                    <input id="rechercheDepart" class="form-control input" type="text" name="villeDepart" placeholder="Départ"/>
+                </div>
 
-        <div class="arrivee">
-            <br><label for="arrivee">Arrivée</label><br>
-            <input id="arrivee" type="text" name="villeArrivee" placeholder="arrivée"/>
-        </div><br>
-        
-        <div>
-            <input type="submit" value="ok"/>
+                <div class="arrivee">
+                    <br><label for="rechercheArrivee">Arrivée</label><br>
+                    <input id="rechercheArrivee" class="form-control input" type="text" name="villeArrivee" placeholder="Arrivée"/>
+                </div><br>
+
+                <div>
+                    <input type="submit" class="btn btn-sm btn-primary" value="Rechercher"/>
+                </div>
+            </form>    
         </div>
-    </form>
+    </div>
 </section>

@@ -31,7 +31,6 @@ class OffersModel extends Model {
     
     public function listDetailOffre($id)
     {
-        //$query = "SELECT * FROM offre WHERE idUser = ?";
         $query = "
             SELECT * 
             FROM user u, offre o, ramassagesparoffre ro, ramassage r 
@@ -45,9 +44,8 @@ class OffersModel extends Model {
     
     public function listPassagerOffre($id)
     {
-        //$query = "SELECT * FROM offre WHERE idUser = ?";
         $query = "
-            SELECT * 
+            SELECT p.nom, p.prenom, p.adresse, p.ville, p.email, p.tel 
             FROM offre o, passagersparoffre po, passager p 
             WHERE po.idOffre = o.id AND po.idPassager = p.id AND o.id = ?
         ";
@@ -60,9 +58,13 @@ class OffersModel extends Model {
     public function listPassagerRamassage($id)
     {
         $query = "
-            SELECT * 
+            SELECT r.id, p.nom, p.adresse, p.codePostal, p.ville, p.prenom, p.email, p.tel 
             FROM offre o, ramassagesparoffre ro, ramassage r, passagersparramassage pr, passager p 
-            WHERE ro.idOffre = o.id AND ro.idRamassage = r.id AND pr.idRamassage = r.id AND pr.idPassager = p.id AND o.id = ?
+            WHERE ro.idOffre = o.id 
+            AND ro.idRamassage = r.id 
+            AND pr.idRamassage = r.id 
+            AND pr.idPassager = p.id 
+            AND o.id = ?
         ";
         
         $result = $this->dbQuery($query, array($id))->fetchAll();

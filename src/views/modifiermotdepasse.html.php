@@ -1,18 +1,26 @@
-<h1>
-    <?php 
-    echo $title . "<br>";
-    ?>
-</h1>
+<section id="about-section" class="about-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    <?php 
+                    echo $title;
+                    ?>
+                </h1>
+            </div>
+            
+            <form action="?controller=user&action=updatepassword" method="POST">
+                <label for="password">Mot de Passe (6 à 12 caractères) : </label><br>
+                <input id="password" type="password" name="password" onblur="verifMdp(this)" required/><br><br>
 
-<form action="?controller=user&action=updatepassword" method="POST">
-    <label for="password">Mot de Passe (6 à 12 caractères) : </label><br>
-    <input id="password" type="password" name="password" onblur="verifMdp(this)" required/><br><br>
-    
-    <label for="confirmPassword">Confirmer Mot de Passe : </label><br>
-    <input id="confirmPassword" type="password" name="confirmPassword" onblur="verifMdp2()" required/><br><br>
-    
-    <input type="submit" name="VALIDER"/>
-</form>
+                <label for="confirmPassword">Confirmer Mot de Passe : </label><br>
+                <input id="confirmPassword" type="password" name="confirmPassword" onblur="verifMdp2()" required/><br><br>
+
+                <input type="submit" name="VALIDER"/>
+            </form>
+        </div>
+    </div>
+</section>
 
 <script>
     function verifMdp(champ) {

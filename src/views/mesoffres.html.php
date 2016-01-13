@@ -1,38 +1,34 @@
-<h1>
-    <?php 
-    echo $title;
-    //var_dump($data2);
-    ?>
-</h1>
+<section id="about-section" class="about-section">
+    <div class="container">
+        <div class="row">
+            <h1>
+                <?php 
+                echo $title;
+                ?>
+            </h1>
+            <hr>
+            <?php 
+            echo "<ul>";
 
-<p>
-    <a href='index.php?controller=user&action=profil'><button>Informations profil</button></a>
-</p>
+            for ($i = 0; $i < count($data); $i++) {
+                echo '<li>';
+                echo '<div style="float:left;"><a href="?controller=offers&action=detailsoffre&id=' . $data[$i]['id'] . '">';
+                echo $dates[$i] . " " . $data[$i]['heure']
+                        . "<br><br>Départ :  " . $data[$i]['adresseDepart'] . " " . $data[$i]['codePostalDepart'] . " " . $data[$i]['villeDepart']
+                        . "<br>Arrivée :  " . $data[$i]['adresseArrivee'] . " " . $data[$i]['codePostalArrivee'] . " " . $data[$i]['villeArrivee'];
+                echo '</div>';
+                echo '<div style="float:left; line-height:100px; margin-left:50px;"><a href="?controller=offers&action=choisiroffre&id=' . $data[$i]['id'] . '"><button class="btn btn-sm btn-primary">Je choisis ce trajet !</button></a></div>';
+                echo "<div style='clear:both;'></div>";
+                echo "</li><hr>";
+            }
 
-<section>
-    <form action="?controller=offers&action=mesoffres" method="POST">
-        <?php 
-        echo "<ul>";
-
-        for ($i = 0; $i < count($data); $i++) {
-            echo '<li><a href="index.php?controller=offers&action=detailsoffre&id=' . $data[$i]['id'] . '">';
-            echo '<input type="checkbox" name="' . $data[$i]['id'] . '" id="' . $data[$i]['id'] . '"/>';
-            echo $dates[$i] . " " . $data[$i]['heure'];
-            echo " de " . $data[$i]['adresseDepart'] . " " . $data[$i]['villeDepart'];
-            echo " à " . $data[$i]['adresseArrivee'] . " " . $data[$i]['villeArrivee'] . "</a>";
-            echo '  <button><a href="?controller=offers&action=modifieroffreform&id=' . $data[$i]['id'] . '">Modifier</a></button>  ';
-            echo '  <button><a href="?controller=offers&action=deleteoffre&id=' . $data[$i]['id'] . '">Supprimer</a></button>  ';
-            echo '</li>';
-        }
-
-        echo "</ul>";
-        ?>
-        <input type="submit" value="Supprimer les éléments sélectionnés"/>
-    </form>
+            echo "</ul>";
+            ?>
+                
+            <p>
+                <a href='index.php?controller=offers&action=ajouteroffre'><button class="btn btn-sm btn-primary">Ajouter Offre</button></a>
+            </p>
+        </div>
+    </div>
 </section>
 
-<p>
-	<a href='index.php?controller=offers&action=offres'><button>Offres</button></a>
-    <a href='index.php?controller=offers&action=mesoffres'><button>Mes Offres</button></a>
-    <a href='index.php?controller=offers&action=ajouteroffre'><button>Ajouter Offre</button></a>
-</p>

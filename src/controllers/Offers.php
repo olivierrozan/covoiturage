@@ -18,11 +18,6 @@ class OffersController extends Controller {
     {
         $this->title = "Recherche";
         
-        foreach ($this->data as $d) {
-            $a = $d['date'] !== NULL ? utf8_encode(strftime("%d %B %Y", strtotime($d['date']))) : "Tous les " . $d['jour'];
-            array_push($this->dates, $a);
-        }
-        
         $this->template = "views/index.html.php";
     }
 
@@ -32,20 +27,35 @@ class OffersController extends Controller {
         
         $offers = new OffersModel();
         
-        $villeDepart = htmlspecialchars($_POST["villeDepart"]);
-        $villeArrivee = htmlspecialchars($_POST["villeArrivee"]);
-        if (isset($villeDepart) && isset($villeArrivee)) {
-            $_SESSION["depart"] = $villeDepart;
-            $_SESSION["arrivee"] = $villeArrivee;
+        if (isset($_POST["villeDepart"]) && isset($_POST["villeArrivee"])) {
+            $this->data2 = explode(", ", htmlspecialchars($_POST["villeDepart"]));
+            $this->data3 = explode(", ", htmlspecialchars($_POST["villeArrivee"]));
+            
+            $_SESSION["depart"] = htmlspecialchars($_POST["villeDepart"]);
+            $_SESSION["arrivee"] = htmlspecialchars($_POST["villeArrivee"]);
+        } else {
+            $this->data2 = explode(", ", htmlspecialchars($_GET["depart"]));
+            $this->data3 = explode(", ", htmlspecialchars($_GET["arrivee"]));
+            
+            $_SESSION["depart"] = htmlspecialchars($_GET["depart"]);
+            $_SESSION["arrivee"] = htmlspecialchars($_GET["arrivee"]);
         }
         
-        $this->data = $offers->listOffres($_SESSION["depart"], $_SESSION["arrivee"]);
+        $this->data = $offers->listOffres($this->data2[0], $this->data3[0]);
         
+        foreach ($this->data as $d) {
+            $a = $d['date'] !== NULL ? "Le " . utf8_encode(strftime("%d %B %Y", strtotime($d['date']))) : "Tous les " . $d['jour'];
+            array_push($this->dates, $a);
+        }
+                
         $this->template = "views/offers.html.php";
     }
     
     public function mesoffresAction() 
     {
+        unset($_SESSION['depart']);
+        unset($_SESSION['arrivee']);
+        
         $user = new UserModel();
         
         if (!$user->isAuth()) {
@@ -94,7 +104,6 @@ class OffersController extends Controller {
         $offers = new OffersModel();
         
         $id = htmlspecialchars($_GET["id"]);
-        
         
         $this->data = $offers->listRamassageParOffre($id);
         
@@ -175,7 +184,7 @@ class OffersController extends Controller {
         
         if ($periode === 'permanente') {
             $jour = htmlspecialchars($_POST["jour"]);
-            $date = "";
+            $date = NULL;
         } else {
             $jour = "";
             $date = htmlspecialchars($_POST["date"]);
@@ -197,7 +206,10 @@ class OffersController extends Controller {
     private function addRamassage($listId)
     {
         $default = new OffersModel();
-        $ramassage = $_POST['ramassage'];
+        
+        if (isset($_POST['ramassage'])) {
+            $ramassage = htmlspecialchars($_POST['ramassage']);
+        }
         
         foreach($ramassage as $field) {
             $default->insertRamassage($field);
@@ -208,6 +220,35 @@ class OffersController extends Controller {
         for ($i = 0; $i < count($a); $i++) {
             $default->insertRamassageOffre($listId[0], $a[$i][0]);
         }
+    }
+    
+    public function insertramassageAction()
+    {
+        $user = new UserModel();
+        if (!$user->isAuth()) {
+            header("Location: ?controller=user&action=login");
+        }
+        
+        $default = new OffersModel();
+        
+        if (isset($_POST['ramassage'])) {
+            $this->data = $_POST['ramassage'];
+        } 
+        
+        foreach($this->data as $field) {
+            $default->insertRamassage($field);
+        }
+        
+        $id = htmlspecialchars($_GET['id']);
+        $a = $default->listRamassages(count($this->data));
+
+        for ($i = 0; $i < count($a); $i++) {
+            $default->insertRamassageOffre($id, $a[$i][0]);
+        }
+        
+        header("Location: ?controller=offers&action=mesoffres");
+        
+        $this->template = "views/mesoffres.html.php";
     }
     
     public function render()

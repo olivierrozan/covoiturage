@@ -28,6 +28,7 @@ class UserController extends Controller {
         }*/
         
         $this->templateData["title"] = "Nouvel Utilisateur";
+        $this->title = "Nouvel Utilisateur";
         $this->templateData["formAction"] = "?controller=user&action=insert";
         
         $userForm = new CreateUserForm();
@@ -175,6 +176,8 @@ class UserController extends Controller {
         unset($_SESSION['uid']);
         unset($_SESSION['login']);
         unset($_SESSION['password']);
+        unset($_SESSION['depart']);
+        unset($_SESSION['arrivee']);
 
         $user = new UserModel();
         
@@ -199,9 +202,9 @@ class UserController extends Controller {
         
         $this->profil = $user->listUser($_SESSION['login'], $_SESSION['password']);
              
-        if (!$user->isAuth()) {
+        /*if (!$user->isAuth()) {
             header("Location: ?controller=user&action=login");
-        }
+        }*/
         
         $this->template = "views/profil.html.php";
     }
@@ -285,7 +288,7 @@ class UserController extends Controller {
         
         $this->template = "views/modifiermotdepasse.html.php";
     }
-    
+        
     /**
      * render()
      * Affiche le rendu du contrôleur

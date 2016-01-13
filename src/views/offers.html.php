@@ -1,26 +1,30 @@
-<h1>
-    <?php 
-    echo $title;
-    ?>
-</h1>
+<section id="about-section" class="about-section">
+    <div class="container">
+        <div class="row">
+            <h1>
+                <?php 
+                echo $title . " " . $data2[0] . " - " . $data3[0];
+                ?>
+            </h1>
+            <hr>
+            <?php 
+            echo '<ul>';
 
-<p>
-    <?php 
-    echo '<ul>';
-    
-    foreach ($data as $oneData) {
-        echo '<li><a href="?controller=offers&action=detailsoffre&id=' . $oneData['id'] . '">';
-        echo $oneData['jour'] . " " . $oneData['date'] . " " . $oneData['heure'] . " " . $oneData['villeDepart'] . " " . $oneData['villeArrivee'];
-        echo '</a>  <button><a href="?controller=offers&action=choisiroffre&id=' . $oneData['id'] . '">Je choisis ce trajet !</a></button>';
-        echo '</li>';
-    }
-    
-    echo '</ul>';
-    ?>
-</p>
+            for ($i = 0; $i < count($data); $i++) {
+                echo '<li>';
+                echo '<div style="float:left;"><a href="?controller=offers&action=detailsoffre&id=' . $data[$i]['id'] . '">';
+                echo $dates[$i] . " " . $data[$i]['heure']
+                        . "<br><br>Départ :  " . $data[$i]['adresseDepart'] . " " . $data[$i]['codePostalDepart'] . " " . $data[$i]['villeDepart']
+                        . "<br>Arrivée :  " . $data[$i]['adresseArrivee'] . " " . $data[$i]['codePostalArrivee'] . " " . $data[$i]['villeArrivee'];
+                echo '</div>';
+                echo '<div style="float:left; line-height:100px; margin-left:50px;"><a href="?controller=offers&action=choisiroffre&id=' . $data[$i]['id'] . '"><button class="btn btn-sm btn-primary">Je choisis ce trajet !</button></a></div>';
+                echo "<div style='clear:both;'></div>";
+                echo "</li><hr>";
+            }
 
-<p>
-	<a href='index.php?controller=offers&action=index'><button>Recherche</button></a>
-    <a href='index.php?controller=offers&action=offres'><button>Offres</button></a>
-    <a href='index.php?controller=offers&action=mesoffres'><button>Mes Offres</button></a>
-</p>
+            echo '</ul>';
+            ?>
+
+        </div>
+    </div>
+</section>
