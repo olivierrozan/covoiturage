@@ -3,7 +3,7 @@
         <div class="row">
             <h1>
                 <?php 
-                echo $title . " " . $data2[0] . " - " . $data3[0];
+                echo $title . " " . $data2[0] . " - " . $data3[0] . " : " . $data[0]["idUser"];
                 ?>
             </h1>
             <hr>
@@ -17,7 +17,11 @@
                         . "<br><br>Départ :  " . $data[$i]['adresseDepart'] . " " . $data[$i]['codePostalDepart'] . " " . $data[$i]['villeDepart']
                         . "<br>Arrivée :  " . $data[$i]['adresseArrivee'] . " " . $data[$i]['codePostalArrivee'] . " " . $data[$i]['villeArrivee'];
                 echo '</div>';
-                echo '<div style="float:left; line-height:100px; margin-left:50px;"><a href="?controller=offers&action=choisiroffre&id=' . $data[$i]['id'] . '"><button class="btn btn-sm btn-primary">Je choisis ce trajet !</button></a></div>';
+                
+                if (isset($_SESSION["uid"]) && $_SESSION["uid"] !== $data[$i]["idUser"]) {
+                    echo '<div style="float:left; line-height:100px; margin-left:50px;"><a href="?controller=offers&action=choisiroffre&id=' . $data[$i]['id'] . '"><button class="btn btn-sm btn-primary">Je choisis ce trajet !</button></a></div>';
+                }
+                
                 echo "<div style='clear:both;'></div>";
                 echo "</li><hr>";
             }

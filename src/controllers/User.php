@@ -185,7 +185,7 @@ class UserController extends Controller {
         $this->title = "Authentification";
         
         if ($user->isAuth()) {
-            header('Location: ?controller=user&action=login');
+            header('Location: ?controller=offers&action=index');
         }
     }
     

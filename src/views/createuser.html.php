@@ -1,14 +1,12 @@
 <section id="about-section" class="about-section">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <h1>
-                    <?php 
-                    echo $title;
-                    ?>
-                </h1>
-            </div>
-            
+            <h1>
+                <?php 
+                echo $title;
+                ?>
+            </h1>
+            <a href='index.php?controller=user&action=login'><button class="btn btn-sm btn-primary">Je suis déjà membre</button></a>
             <h4>
                 <?php
                 if (isset($_REQUEST["error"])) {
@@ -32,8 +30,8 @@
                 <input type="button" class="btn btn-sm btn-primary" onclick="window.location='index.php?controller=offers&action=mesoffres'" value="annuler"/>
                 
             </form>
+            <br>
             
-            <a href='index.php?controller=user&action=login'><button class="btn btn-sm btn-primary">Je suis déjà membre</button></a>
         </div>
     </div>
 </section>

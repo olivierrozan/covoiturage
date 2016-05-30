@@ -1,11 +1,4 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Offers
  *
@@ -39,13 +32,23 @@ class OffersModel extends Model {
         
         $result = $this->dbQuery($query, array($id))->fetchAll();
         
+        if (!$result) {
+            $query = "
+                SELECT * 
+                FROM user u, offre o 
+                WHERE o.idUser = u.id AND o.id = ?
+            ";
+
+            $result = $this->dbQuery($query, array($id))->fetchAll();
+        }
+        
         return $result;
     }
     
     public function listPassagerOffre($id)
     {
         $query = "
-            SELECT p.nom, p.prenom, p.adresse, p.ville, p.email, p.tel 
+            SELECT p.id, p.nom, p.prenom, p.adresse, p.codePostal, p.ville, p.email, p.tel 
             FROM offre o, passagersparoffre po, passager p 
             WHERE po.idOffre = o.id AND po.idPassager = p.id AND o.id = ?
         ";
@@ -122,10 +125,11 @@ class OffersModel extends Model {
         $this->dbQuery($query, array($ramassage));
     }
     
-    public function insertOffre($jour, $date, $heure, $depart, $retour)
+    public function insertOffre($jour, $date, $heure, $adresseDepart, $adresseArrivee, $depart, $retour)
     {
-        $query = "INSERT INTO offre (idUser, jour, date, heure, villeDepart, villeArrivee) VALUES (?, ?, ?, ?, ?, ?)";
-        $this->dbQuery($query, array($_SESSION['uid'], $jour, $date, $heure, $depart, $retour));
+        $query = "INSERT INTO offre (idUser, jour, date, heure, adresseDepart, codePostalDepart, villeDepart, adresseArrivee, codePostalArrivee, villeArrivee) "
+                . "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $this->dbQuery($query, array($_SESSION['uid'], $jour, $date, $heure, $adresseDepart, $depart[0], $depart[1], $adresseArrivee, $retour[0], $retour[1]));
         
         $query3 = "SELECT MAX(o.id) FROM offre o";
         $result = $this->dbQuery($query3)->fetch();

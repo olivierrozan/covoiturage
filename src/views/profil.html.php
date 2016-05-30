@@ -1,13 +1,11 @@
 <section id="about-section" class="about-section">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <h1>
-                    <?php 
-                    echo $title;
-                    ?>
-                </h1>
-            </div>
+            <h1>
+                <?php 
+                echo $title;
+                ?>
+            </h1>
             
             <h3>
                 <?php
@@ -28,7 +26,6 @@
             </p>
 
             <p>
-                <a href='index.php?controller=user&action=logout'><button class="btn btn-sm btn-primary">Logout</button></a>
                 <a href='index.php?controller=user&action=modifierprofil'><button class="btn btn-sm btn-primary">Modifier profil</button></a>
             </p>
         </div>

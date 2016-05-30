@@ -190,11 +190,18 @@ class OffersController extends Controller {
             $date = htmlspecialchars($_POST["date"]);
         }
         
-        $depart = htmlspecialchars($_POST["depart"]);
-        $arrivee = htmlspecialchars($_POST["arrivee"]);
-        $heure = htmlspecialchars($_POST["heure"]) . "h" . htmlspecialchars($_POST["minute"]);
+        $adresseDepart = htmlspecialchars($_POST["adresseDepart"]);
+        $adresseArrivee = htmlspecialchars($_POST["adresseArrivee"]);
+        $depart = explode(", ", htmlspecialchars($_POST["villeDepart"]));
+        $depart = explode(" ", $depart[0]);
+        $arrivee = explode(", ", htmlspecialchars($_POST["villeArrivee"]));
+        $arrivee = explode(" ", $arrivee[0]);
+        
+        list($heure, $minutes) = explode(":", htmlspecialchars($_POST["heure"]));
+        
+        $heure = $heure . "h" . $minutes;
                 
-        $listId = $default->insertOffre($jour, $date, $heure, $depart, $arrivee);
+        $listId = $default->insertOffre($jour, $date, $heure, $adresseDepart, $adresseArrivee, $depart, $arrivee);
         
         $this->addRamassage($listId);
         
@@ -209,16 +216,16 @@ class OffersController extends Controller {
         
         if (isset($_POST['ramassage'])) {
             $ramassage = htmlspecialchars($_POST['ramassage']);
-        }
-        
-        foreach($ramassage as $field) {
-            $default->insertRamassage($field);
-        }
+            
+            foreach($ramassage as $field) {
+                $default->insertRamassage($field);
+            }
 
-        $a = $default->listRamassages(count($ramassage));
+            $a = $default->listRamassages(count($ramassage));
 
-        for ($i = 0; $i < count($a); $i++) {
-            $default->insertRamassageOffre($listId[0], $a[$i][0]);
+            for ($i = 0; $i < count($a); $i++) {
+                $default->insertRamassageOffre($listId[0], $a[$i][0]);
+            }
         }
     }
     
