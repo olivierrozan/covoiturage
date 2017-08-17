@@ -7,6 +7,10 @@
 class UserModel extends Model {
     protected $table = "user";
     
+    /**
+     * isAuth()
+     * Teste si l'utilisateur est connecté ou non
+     */
     public function isAuth()
     {
         if (isset($_SESSION['uid'])) {
@@ -16,20 +20,22 @@ class UserModel extends Model {
         return false;
     }
     
+    /**
+     * auth()
+     * Connexion de l'utilisateur
+     */
     public function auth($login, $password)
     {
         $query = "SELECT * FROM " . $this->table . " WHERE login = ? OR email = ?";
         $result = $this->dbQuery($query, array($login, $login))->fetch();
         
-        if (!empty($result)) {
-            $_SESSION["uid"] = $result["id"];
-            $_SESSION["login"] = $login;
-            $_SESSION["password"] = $password;
-        }
-        
         return $result;
     }
     
+    /**
+     * Created()
+     * Ajout d'un compte utilisateur dans la BDD
+     */
     public function Created($email, $nom, $prenom, $tel, $password)
     {
         $query = "INSERT INTO user (email, login, password, nom, prenom, tel) VALUES (?, ?, ?, ?, ?, ?)";
@@ -42,6 +48,10 @@ class UserModel extends Model {
         //$result = $this->dbQuery($query, array($email, $login, $password, $nom, $prenom, $tel));
     }
     
+    /**
+     * Created()
+     * Affiche le profil d'un utilisateur
+     */
     public function listUser($login)
     {
         $query = "SELECT * FROM user WHERE login = ? OR email = ?";
@@ -50,11 +60,19 @@ class UserModel extends Model {
         return $result;
     }
     
+    /**
+     * login()
+     * Création d'un login
+     */
     public function login($prenom, $nom)
     {        
         return $prenom[0].$nom;
     }
     
+    /**
+     * password()
+     * Création d'un mot de passe
+     */
     public function password()
     {
         $mdp = "";

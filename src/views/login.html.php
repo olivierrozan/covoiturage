@@ -1,9 +1,10 @@
 <?php
 /*
+ * !! A SUPPRIMER LORS DU DEPLOIEMENT !!
  * jdurand : aaaaaa
  * jduval : bbbbbb
  * lahmad : cccccc
- * jbieber : OcXjds
+ * Admin : admin59
  * orozan : OzTprP
  */
 ?>
@@ -17,13 +18,13 @@
                 ?>
             </h1>
             
-            <h3>
+            <p style="color:red;">
                 <?php
                 if (isset($_REQUEST["error"])) {
                     echo "Mot de passe incorrect";
                 }
                 ?>
-            </h3>
+            </p>
 
             <p>
                 <a href='index.php?controller=user&action=createuser'><button class="btn btn-sm btn-primary">Pas encore inscrit?</button></a>

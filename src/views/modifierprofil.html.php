@@ -7,19 +7,31 @@
                 ?>
             </h1>
             
-            <form action="?controller=user&action=updateprofil" method="POST">
+            <form action="?controller=profil&action=updateprofil" method="POST">
 
                 <label for="nom">Nom : </label><br>
-                <input id="nom" class="form-control input" type="text" name="Nom" value="<?php echo $profil["nom"]; ?>" onblur="verifNom(this)" required/><br><br>
+                <input id="nom" class="form-control input" type="text" name="nom" value="<?php echo $profil["nom"]; ?>" onblur="verifNom(this)" required/><br>
                 <label for="prenom">Prenom : </label><br>
-                <input id="prenom" class="form-control input" type="text" name="Prenom" value="<?php echo $profil["prenom"]; ?>" onblur="verifPrenom(this)" required/><br><br>
+                <input id="prenom" class="form-control input" type="text" name="prenom" value="<?php echo $profil["prenom"]; ?>" onblur="verifPrenom(this)" required/><br>
+                <label for="login">Login : </label><br>
+                <input id="login" class="form-control input" type="text" name="login" value="<?php echo $profil["login"]; ?>" required/><br><br>
+                <label for="adresse">Adresse : </label><br>
+                <input id="adresse" class="form-control input" type="adresse" name="adresse" value="<?php echo $profil["adresse"]; ?>" required/><br>
+                <label for="codePostal">Code Postal : </label><br>
+                <input id="codePostal" class="form-control input" type="codePostal" name="codePostal" value="<?php echo $profil["codePostal"]; ?>" required/><br>
+                <label for="ville">Ville : </label><br>
+                <input id="ville" class="form-control input" type="ville" name="ville" value="<?php echo $profil["ville"]; ?>" required/><br>
                 <label for="email">Email : </label><br>
-                <input id="email" class="form-control input" type="email" name="Email" value="<?php echo $profil["email"]; ?>" onblur="verifMail(this)" required/><br><br>
+                <input id="email" class="form-control input" type="email" name="email" value="<?php echo $profil["email"]; ?>" onblur="verifMail(this)" required/><br>
                 <label for="tel">Telephone : </label><br>
-                <input id="tel" class="form-control input" type="tel" name="Telephone" value="<?php echo $profil["tel"]; ?>" placeholder="xx.xx.xx.xx.xx" onblur="verifTel(this)" required/><br><br>
-
+                <input id="tel" class="form-control input" type="tel" name="tel" value="<?php echo $profil["tel"]; ?>" placeholder="xx.xx.xx.xx.xx" onblur="verifTel(this)" required/><br>
+                <label for="voiture">Voiture : </label><br>
+                <input id="voiture" class="form-control input" type="text" name="voiture" value="<?php echo $profil["voiture"]; ?>" required/><br>
+                <label for="places">Nombre de places au total : </label><br>
+                <input id="places" class="form-control input" type="number" name="places" value="<?php echo $profil["places"]; ?>" required/><br>
+                
                 <input type="submit" class="btn btn-sm btn-primary" value="ok"/>
-                <input type="button" class="btn btn-sm btn-primary" onclick="window.location='index.php?controller=offers&action=profil'" value="annuler"/>
+                <input type="button" class="btn btn-sm btn-primary" onclick="window.location='index.php?controller=profil&action=profil'" value="annuler"/>
             </form>
 
         </div>

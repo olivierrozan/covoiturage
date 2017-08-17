@@ -13,6 +13,10 @@ class Model {
         
     }
     
+    /**
+     * connect()
+     * Connexion à la BDD
+     */
     protected function connect()
     {
         global $config;
@@ -24,6 +28,10 @@ class Model {
         }
     }
     
+    /**
+     * dbQuery()
+     * Gestion des requêtes SQL
+     */
     protected function dbQuery($query, $data = array())
     {
         $this->connect();
@@ -34,6 +42,10 @@ class Model {
         return $q;
     }
     
+    /**
+     * listAll()
+     * Liste la totalité d'une table de la BDD
+     */
     public function listAll($table)
     {
         $query = "SELECT * FROM " . $table;
@@ -41,6 +53,10 @@ class Model {
         return $this->dbQuery($query)->fetchAll();
     }
     
+    /**
+     * create()
+     * Insertion de champs dans la BDD
+     */
     public function create($data)
     {
         $keys = array_keys($data);

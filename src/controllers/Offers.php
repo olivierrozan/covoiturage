@@ -14,13 +14,21 @@ class OffersController extends Controller {
     protected $data = array(), $data2 = array(), $data3 = array();
     protected $dates = array();
     
+    /**
+     * indexAction()
+     * La page de départ
+     */
     public function indexAction() 
     {
         $this->title = "Recherche";
         
         $this->template = "views/index.html.php";
     }
-
+    
+    /**
+     * offresAction()
+     * Gestion des offres
+     */
     public function offresAction() 
     {
         $this->title = "Offres";
@@ -51,10 +59,16 @@ class OffersController extends Controller {
         $this->template = "views/offers.html.php";
     }
     
+    /**
+     * mesoffresAction()
+     * Gestion des offres créées par l'utilisateur
+     */
     public function mesoffresAction() 
     {
         unset($_SESSION['depart']);
         unset($_SESSION['arrivee']);
+        
+        $this->title = " Mes Offres";
         
         $user = new UserModel();
         
@@ -71,13 +85,17 @@ class OffersController extends Controller {
             array_push($this->dates, $a);
         }
         
-        $this->title = "Offres de " . $_SESSION["login"];
-        
         $this->template = "views/mesoffres.html.php";
     }
     
+    /**
+     * detailsoffreAction()
+     * Détails d'une offre sélectionnée
+     */
     public function detailsoffreAction()
     {   
+        $this->title = "Details Offre : ";
+        
         $offers = new OffersModel();
         
         $id = htmlspecialchars($_GET['id']);
@@ -90,10 +108,13 @@ class OffersController extends Controller {
                 $this->data[0]['jour'];
         array_push($this->dates, $a);
         
-        $this->title = "Details Offre : ";
         $this->template = "views/detailoffre.html.php";
     }
     
+    /**
+     * deleteoffreAction()
+     * Suppression d'une offre
+     */
     public function deleteoffreAction()
     {
         $user = new UserModel();
@@ -119,6 +140,10 @@ class OffersController extends Controller {
         $this->template = "views/mesoffres.html.php";
     }
     
+    /**
+     * deleteoffreAction()
+     * Accès au formulaire de modification d'une offre
+     */
     public function modifieroffreformAction()
     {
         $this->title = "Modifier Offre";
@@ -136,6 +161,10 @@ class OffersController extends Controller {
         $this->template = "views/modifieroffre.html.php";
     }
     
+    /**
+     * updateoffreAction()
+     * Modification d'une offre dans la BDD
+     */
     public function updateoffreAction()
     {
         $user = new UserModel();
@@ -159,6 +188,10 @@ class OffersController extends Controller {
         $this->template = "views/modifieroffres.html.php";
     }
     
+    /**
+     * ajouteroffreAction()
+     * Formulaire d'ajout d'une offre
+     */
     public function ajouteroffreAction()
     {
         $this->title = "Ajouter Offre";
@@ -171,6 +204,10 @@ class OffersController extends Controller {
         $this->template = "views/ajouteroffre.html.php";
     }
     
+    /**
+     * insertoffreAction()
+     * Ajout d'une offre dans la BDD
+     */
     public function insertoffreAction()
     {
         $user = new UserModel();
@@ -210,6 +247,10 @@ class OffersController extends Controller {
         $this->template = "views/mesoffres.html.php";
     }
     
+    /**
+     * addRamassage()
+     * Ajout d'une étape dans une offre
+     */
     private function addRamassage($listId)
     {
         $default = new OffersModel();
@@ -229,6 +270,10 @@ class OffersController extends Controller {
         }
     }
     
+    /**
+     * addRamassage()
+     * Ajout d'une étape dans une offre dans la BDD
+     */
     public function insertramassageAction()
     {
         $user = new UserModel();
@@ -258,6 +303,10 @@ class OffersController extends Controller {
         $this->template = "views/mesoffres.html.php";
     }
     
+    /**
+     * render()
+     * Affichage du rendu du contrôleur
+     */
     public function render()
     {
         ob_start();

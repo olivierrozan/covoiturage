@@ -13,6 +13,10 @@ class CreateUserController extends Controller {
     protected $title = '';
     protected $data = array();
     
+    /**
+     * createAction()
+     * Création d'un compte
+     */
     public function createAction()
     {
         $user = new UserModel();

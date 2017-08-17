@@ -4,7 +4,6 @@
             
             <h1>
                 <?php 
-                //var_dump($data);
                 echo $title . $data[0]["villeDepart"] . " => " . $data[0]["villeArrivee"];
                 if (isset($_SESSION['depart']) && isset($_SESSION['arrivee'])) {
                 echo "    <a href='index.php?controller=offers&action=offres&depart=" . $_SESSION['depart'] . "&arrivee=" . $_SESSION['arrivee'] . "'>"
@@ -36,20 +35,20 @@
                 echo "<ul><h5>Passagers directs : </h5>";
 
                 foreach ($data2 as $oneData) {
-                    echo "<li>"/* . $oneData['id'] . " "  */. $oneData['nom'] . " " . $oneData['prenom'] ./* " " . $oneData['adresse'] . " " . 
+                    echo "<li style='font-size:16px;'>"/* . $oneData['id'] . " "  */. $oneData['nom'] . " " . $oneData['prenom'] ./* " " . $oneData['adresse'] . " " . 
                         $oneData['codePostal'] . " " . $oneData['ville'] . " " . $oneData['tel'] . " " . $oneData['email'] . */"</li>";
                 }
 
                 echo "</ul>";
-                echo "<ul><h4>Ramassages : </h4>";
+                echo "<ul><h5>Ramassages : </h5>";
 
                 for ($i = 0; $i < count($data); $i++) {
-                    echo "<li>"/* . $data[$i]['id'] . " " */. $data[$i]['adresse'] . "<br>" . $data[$i]['codePostal'] . " " . $data[$i]['ville'];
-                    echo "<ul style='margin-left:50px;'><h5>Passagers : </h5>";
+                    echo "<li style='font-size:16px;'><b>"/* . $data[$i]['id'] . " " */. $data[$i]['adresse'] . "<br>" . $data[$i]['codePostal'] . " " . $data[$i]['ville'];
+                    echo "</b><ul style='margin-left:25px;'><h5>Passagers : </h5>";
 
                     for ($j = 0; $j < count($data3); $j++) {
                         if (isset($data3[$j]) && $data3[$j]['id'] === $data[$i]['idRamassage']) {
-                            echo "<li>"/* . $data3[$j]['id'] . " " */. $data3[$j]['nom'] . " " . $data3[$j]['prenom'] . /*" " . $data3[$j]['adresse'] . " " . 
+                            echo "<li style='font-size:16px;'>"/* . $data3[$j]['id'] . " " */. $data3[$j]['nom'] . " " . $data3[$j]['prenom'] . /*" " . $data3[$j]['adresse'] . " " . 
                                     $data3[$j]['codePostal'] . " " . $data3[$j]['ville'] . " " . $data3[$j]['tel'] . " " . $data3[$j]['email'] .*/ "</li>";
                         } 
                     }
@@ -79,7 +78,7 @@
                 <h3>Conducteur</h3>
                 <p>
                     <?php
-                    echo "<a href='?controller=user&action=profil'>" . $data[0]['prenom'] . " " . $data[0]['nom'] . "</a>";
+                    echo "<a href='?controller=profil&action=profil'>" . $data[0]['prenom'] . " " . $data[0]['nom'] . "</a>";
                     ?>
                 </p>
                 <p>

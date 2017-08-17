@@ -9,11 +9,19 @@ class Controller {
     protected $templateData = array();
     protected $rootPath = "";
     
+    /**
+     * __construct()
+     * Constructeur du contrôleur
+     */
     public function __construct($rootPath) 
     {
         $this->rootPath = $rootPath;
     }
     
+    /**
+     * render()
+     * Gère l'affichage
+     */
     public function render()
     {
         ob_start();

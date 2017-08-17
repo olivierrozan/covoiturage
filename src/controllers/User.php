@@ -27,7 +27,6 @@ class UserController extends Controller {
             header("Location: ?controller=user&action=login");
         }*/
         
-        $this->templateData["title"] = "Nouvel Utilisateur";
         $this->title = "Nouvel Utilisateur";
         $this->templateData["formAction"] = "?controller=user&action=insert";
         
@@ -43,7 +42,6 @@ class UserController extends Controller {
      */
     public function insertAction()
     {
-        $this->templateData['title'] = "Authentification";
         $this->title = "Created";
                 
         $user = new UserModel();
@@ -79,6 +77,10 @@ class UserController extends Controller {
         $this->template = "views/createuser.html.php";
     }
     
+    /**
+     * validate()
+     * Teste la saisie du nom, du prénom, du mail et du téléphone
+     */
     private function validate($nom, $prenom, $email, $telephone)
     {
         return (
@@ -89,6 +91,10 @@ class UserController extends Controller {
         );
     }
     
+    /**
+     * validatePassword()
+     * Teste la validité du mot de passe
+     */
     private function validatePassword($password, $password2)
     {
         return (
@@ -97,6 +103,10 @@ class UserController extends Controller {
         );
     }
     
+    /**
+     * sendMail()
+     * Envoi de mails
+     */
     private function sendMail($login, $password, $email)
     {
         $objet = "CoVoiturage : Nouvel utilisateur";
@@ -127,7 +137,7 @@ class UserController extends Controller {
      */
     public function confirmAction()
     {
-        $this->templateData['title'] = "Nouvel utilisateur créé";
+        $this->title = "Nouvel utilisateur créé";
         
         /*$user = new UserModel();
         if (!$user->isAuth()) {
@@ -143,23 +153,23 @@ class UserController extends Controller {
      */
     public function loginAction()
     {
-        $this->templateData['title'] = "Authentification";
         $this->title = "Authentification";
 
         $user = new UserModel();
-        
-        
-            
+          
         if (isset($_POST["login"]) && isset($_POST["password"])) {
             $login = htmlspecialchars($_POST["login"]);
             $password = htmlspecialchars($_POST["password"]);
+            
             $this->loginRequest = $user->auth($login, $password);
             
-            if ($user->isAuth() && password_verify($password, $this->loginRequest["password"])) {
-                header("Location: ?controller=offers&action=mesoffres");
-            }
-            
-            if (!password_verify($password, $this->loginRequest["password"])) {
+            if (password_verify($password, $this->loginRequest["password"])) {
+                $_SESSION["uid"] = $this->loginRequest["id"];
+                $_SESSION["login"] = $login;
+                $_SESSION["password"] = $password;
+                
+                header("Location: ?controller=offers&action=mesoffres&welcome");
+            } else {
                 header("Location: ?controller=user&action=login&error");
             }
         }
@@ -181,114 +191,15 @@ class UserController extends Controller {
 
         $user = new UserModel();
         
-        $this->templateData['title'] = "Authentification";
-        $this->title = "Authentification";
+        $this->title = "DECONNEXION";
         
-        if ($user->isAuth()) {
-            header('Location: ?controller=offers&action=index');
-        }
-    }
-    
-    /**
-     * profilAction()
-     * Donne accès au profil de l'utilisateur connecté
-     */
-    public function profilAction()
-    {
-        $this->templateData['title'] = "PROFIL";
-        $this->title = "PROFIL";
-        
-        $user = new UserModel();
-        
-        $this->profil = $user->listUser($_SESSION['login'], $_SESSION['password']);
-             
-        /*if (!$user->isAuth()) {
-            header("Location: ?controller=user&action=login");
+        /*if ($user->isAuth()) {
+            header('Location: ?controller=offers&action=index');   
         }*/
         
-        $this->template = "views/profil.html.php";
+        $this->template = "views/logout.html.php";
     }
     
-    /**
-     * modifierprofilAction()
-     * Permet de modifier les informations de l'utilisateur connecté
-     */
-    public function modifierprofilAction()
-    {
-        $this->templateData['title'] = "MODIFIER PROFIL";
-        $this->title = "MODIFIER PROFIL";
-        
-        $user = new UserModel();
-        
-        $this->profil = $user->listUser($_SESSION['login'], $_SESSION['password']);
-             
-        if (!$user->isAuth()) {
-            header("Location: ?controller=user&action=login");
-        }
-        
-        $this->template = "views/modifierprofil.html.php";
-    }
-    
-    /**
-     * modifierprofilAction()
-     * Permet de modifier les informations de l'utilisateur connecté
-     */
-    public function updateprofilAction()
-    {
-        $user = new UserModel();
-        
-        $this->profil = $user->listUser($_SESSION['login'], $_SESSION['password']);
-             
-        if (!$user->isAuth()) {
-            header("Location: ?controller=user&action=login");
-        }
-        
-        header("Location: ?controller=user&action=profil&modif");
-        
-        $this->template = "views/modifierprofil.html.php";
-    }
-    
-    /**
-     * modifiermotdepasseAction()
-     * Permet de modifier le mot de passe de l'utilisateur connecté
-     */
-    public function modifiermotdepasseAction()
-    {
-        $this->templateData['title'] = "Modifier Mot De Passe";
-        $this->title = "Modifier Mot De Passe";
-        
-        $user = new UserModel();
-        if (!$user->isAuth()) {
-            header("Location: ?controller=user&action=login");
-        }
-                
-        $this->template = "views/modifiermotdepasse.html.php";
-    }
-    
-    /**
-     * updatepasswordAction()
-     * execute la requete de modification le mot de passe de l'utilisateur connecté
-     */
-    public function updatepasswordAction()
-    {
-        $this->templateData['title'] = "Modifier Mot De Passe";
-        $this->title = "Modifier Mot De Passe";
-        
-        $user = new UserModel();
-        if (!$user->isAuth()) {
-            header("Location: ?controller=user&action=login");
-        }
-        
-        $password = htmlspecialchars($_POST["password"]);
-        $password2 = htmlspecialchars($_POST["confirmPassword"]);
-        
-        if ($this->validatePassword($password, $password2)) {
-            header('Location: ?controller=offers&action=index&modifmdp');
-        } 
-        
-        $this->template = "views/modifiermotdepasse.html.php";
-    }
-        
     /**
      * render()
      * Affiche le rendu du contrôleur

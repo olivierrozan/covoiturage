@@ -2,26 +2,40 @@
 session_start();
 
 require_once($rootPath . "controllers/Controller.php");
-require_once($rootPath . "models/model.php");
+require_once($rootPath . "models/Model.php");
 
-$controller = "Offers";
-$action = "indexAction";
-
-if (isset($_REQUEST['controller'])) {
-    $controller = ucfirst($_REQUEST['controller']);
-}
-
-if (isset($_REQUEST['action'])) {
-    $action = strtolower($_REQUEST['action']) . "Action";
+// Met la première lettre du contrôleur en majuscule
+if (isset($_GET['controller'])) {
+    $controller = ucfirst($_GET['controller']);
+} else {
+	$controller = "Offers";
 }
 
 $controllerPath = $rootPath . "controllers/" . $controller . ".php";
 
-require_once($controllerPath);
+if (file_exists($controllerPath)) {
+	require_once($controllerPath);
 
-$controllerName = $controller . "Controller";
-$controller = new $controllerName($rootPath);
-$controller->$action();
+	$controllerName = $controller . "Controller";
+	$controller = new $controllerName($rootPath);
+} else {
+    header("Location:index.php?controller=error&action=error404");
+    exit();
+}
+
+// Met la paramètre action en minuscule
+if (isset($_GET['action'])) {
+    $action = lcfirst($_GET['action']) . "Action";
+} else {
+	$action = "indexAction";
+}
+
+if (method_exists($controller, $action)) {
+    $controller->$action();
+} else {
+    header("Location:index.php?controller=error&action=error404");
+    exit();
+}
 
 $content = $controller->render();
 

@@ -8,7 +8,7 @@
         <title>CoVoiturage</title>
         
         <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
-        <script type="text/javascript" src="include/jquery-2.1.4.js"></script>
+        <script type="text/javascript" src="include/jquery-2.2.4.js"></script>
         
         <script src="include/jquery.geocomplete.js"></script>
         <script src="include/logger.js"></script>
@@ -27,7 +27,11 @@
         <link rel="stylesheet" type="text/css" href="include/css/lightbox.css">
         <!-- Responsive CSS Style -->
         <link rel="stylesheet" type="text/css" href="include/css/responsive.css">
-        <!-- Sulfur CSS Styles  -->
+        
+        
+        
+        <link rel="stylesheet" href="include/bootstrap.vertical-tabs.css">
+
         <link rel="stylesheet" type="text/css" href="include/css/style.css">
         
         <script src="include/js/modernizrr.js"></script>
@@ -68,15 +72,16 @@
 					</div>
 					
 					<ul class='nav navbar-nav navbar-right'>
-						<li><a href='index.php?controller=offers&action=ajouteroffre'>Ajouter Offre</a></li>
-						<li><a href='index.php?controller=offers&action=index'>Recherche</a></li>
+                        <li><a href='index.php?controller=offers&action=index'>Recherche</a></li>
 						
 						<?php
 						if (isset($_SESSION["uid"])) {
 						?>
-						<li><a href='index.php?controller=user&action=logout'>Se Déconnecter</a></li>
-						<li><a href='index.php?controller=offers&action=mesoffres'>Mes Offres</a></li>
-						<li><a href='index.php?controller=user&action=profil'>Profil</a></li>
+                        <li><a href='index.php?controller=offers&action=ajouteroffre'>Ajouter Offre</a></li>
+                        <li><a href='index.php?controller=offers&action=mesoffres'>Mes Offres</a></li>
+						<li><a href='index.php?controller=profil&action=profil'>Profil</a></li>
+                        <li><a href='index.php?controller=user&action=logout'>Se Déconnecter</a></li>
+                        <li class="welcome"><?php echo $_SESSION["login"] ?></li>
 						<?php
 						} else {
 						?>
@@ -93,30 +98,7 @@
 		</header>
 		<div class="page-header"></div>
 		<?php
-        /*echo "<header class='clearfix'><div class='navbar navbar-default navbar-fixed-top'>";
-        echo "<div class='container'><div class='navbar-collapse collapse'>"
-        . "<div class='navbar-header'>"
-        . "<a class='navbar-brand'>CoVoiturage</a>"
-        . "</div>"
-        . "<ul class='nav navbar-nav navbar-right'>";
-        echo "<li><a href='index.php?controller=offers&action=ajouteroffre'>Ajouter Offre</a></li>";
-        echo " <li><a href='index.php?controller=offers&action=index'>Recherche</a></li>";
-        
-        if (isset($_SESSION["uid"])) {
-            echo " <li><a href='index.php?controller=user&action=logout'>Se Déconnecter</a></li> ";
-            echo " <li><a href='index.php?controller=offers&action=mesoffres'>Mes Offres</a></li> ";
-            echo " <li><a href='index.php?controller=user&action=profil'>Profil</a></li> ";
-        } else {
-            //echo " <li><a href='index.php?controller=user&action=login'>Se Connecter</a></li> ";
-			echo " <li><a href='*' data-toggle='modal' data-target='#basicModal'>Se Connecter</a></li> ";
-            echo " <li><a href='index.php?controller=user&action=createuser'>S'inscrire</a></li>";
-        }
-        
-        echo "</ul></div></div></header>";
-        
-        echo '<div class="page-header"></div>';*/
-		
-        echo $content;
+        	echo $content;
         ?>
 		
 		<!-- Start CCopyright Section -->
@@ -140,21 +122,8 @@
 				</div><!--/.row -->
 			</div><!-- /.container -->
 		</div>
-		<!-- End CCopyright Section -->
+		<!-- End Copyright Section -->
+
     </body>
     
-    <script type="text/javascript">
-            $(function(){
-                var movementStrength = 50;
-                var height = movementStrength / $(window).height();
-                var width = movementStrength / $(window).width();
-                $(".page-header").mousemove(function(e){
-                          var pageX = e.pageX - ($(window).width() / 2);
-                          var pageY = e.pageY - ($(window).height() / 2);
-                          var newvalueX = width * pageX * -1 - 25;
-                          var newvalueY = height * pageY * -1 - 50;
-                          $('.page-header').css("background-position", newvalueX + "px     " + newvalueY + "px");
-                });
-            });
-        </script>
 </html>
