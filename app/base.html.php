@@ -49,8 +49,8 @@
 					<div class="modal-body">
 						 
 						<form action="?controller=user&action=login" method="POST">
-							<label>Login ou Email : </label><br>
-							<input type="text" name="login" class="form-control input" value="orozan"/><br>
+							<label>Email : </label><br>
+							<input type="text" name="login" class="form-control input" value="rozan.olivier@gmail.com"/><br>
 
 							<label>Mot de Passe : </label><br>
 							<input type="password" name="password" class="form-control input" value="OzTprP"/><br><br>

@@ -13,8 +13,6 @@
                 <input id="nom" class="form-control input" type="text" name="nom" value="<?php echo $profil["nom"]; ?>" onblur="verifNom(this)" required/><br>
                 <label for="prenom">Prenom : </label><br>
                 <input id="prenom" class="form-control input" type="text" name="prenom" value="<?php echo $profil["prenom"]; ?>" onblur="verifPrenom(this)" required/><br>
-                <label for="login">Login : </label><br>
-                <input id="login" class="form-control input" type="text" name="login" value="<?php echo $profil["login"]; ?>" required/><br><br>
                 <label for="adresse">Adresse : </label><br>
                 <input id="adresse" class="form-control input" type="adresse" name="adresse" value="<?php echo $profil["adresse"]; ?>" required/><br>
                 <label for="codePostal">Code Postal : </label><br>
