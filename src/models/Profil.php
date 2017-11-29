@@ -18,11 +18,12 @@ class ProfilModel extends Model {
      */
     public function updateProfil($id, $infos)
     {        
-        $query = "UPDATE user SET email=?, nom=?, prenom=?, adresse=?, codePostal=?, ville=?, tel=?, voiture=?, places=? WHERE id=?";
+        $query = "UPDATE user SET email=?, nom=?, prenom=?, login=?, adresse=?, codePostal=?, ville=?, tel=?, voiture=?, places=? WHERE id=?";
         $this->dbQuery($query, array(
             $infos["email"], 
             $infos["nom"], 
             $infos["prenom"], 
+            $infos["login"], 
             $infos["adresse"], 
             $infos["codePostal"], 
             $infos["ville"], 

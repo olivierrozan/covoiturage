@@ -26,8 +26,8 @@ class UserModel extends Model {
      */
     public function auth($login, $password)
     {
-        $query = "SELECT * FROM " . $this->table . " WHERE email = ?";
-        $result = $this->dbQuery($query, array($login))->fetch();
+        $query = "SELECT * FROM " . $this->table . " WHERE login = ? OR email = ?";
+        $result = $this->dbQuery($query, array($login, $login))->fetch();
         
         return $result;
     }
@@ -38,14 +38,14 @@ class UserModel extends Model {
      */
     public function Created($email, $nom, $prenom, $tel, $password)
     {
-        $query = "INSERT INTO user (email, password, nom, prenom, tel) VALUES (?, ?, ?, ?, ?)";
+        $query = "INSERT INTO user (email, login, password, nom, prenom, tel) VALUES (?, ?, ?, ?, ?, ?)";
         
         $login = $this->login($prenom, $nom);
         //$mdp = $this->password();
         $hashPassword = password_hash($password, PASSWORD_BCRYPT, ['cost' => 10]);
         
-        $result = $this->dbQuery($query, array($email, $hashPassword, $nom, $prenom, $tel));
-        //$result = $this->dbQuery($query, array($email, $password, $nom, $prenom, $tel));
+        $result = $this->dbQuery($query, array($email, $login, $hashPassword, $nom, $prenom, $tel));
+        //$result = $this->dbQuery($query, array($email, $login, $password, $nom, $prenom, $tel));
     }
     
     /**
@@ -54,8 +54,8 @@ class UserModel extends Model {
      */
     public function listUser($login)
     {
-        $query = "SELECT * FROM user WHERE email = ?";
-        $result = $this->dbQuery($query, array($login))->fetch();
+        $query = "SELECT * FROM user WHERE login = ? OR email = ?";
+        $result = $this->dbQuery($query, array($login, $login))->fetch();
         
         return $result;
     }
@@ -75,15 +75,15 @@ class UserModel extends Model {
      */
     public function password()
     {
-        $mdp = "efficient";
+        $mdp = "";
 
-        /*for ($i = 1; $i <= 6; $i++) {
+        for ($i = 1; $i <= 6; $i++) {
             do {
                $n = rand(49, 122); 
             } while ( ($n > 57 && $n < 65) || ($n > 90 && $n < 97) );
 
             $mdp = $mdp.chr($n);
-        }*/
+        }
         
         return $mdp;
     }

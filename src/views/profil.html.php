@@ -34,6 +34,7 @@
                                 <?php
                                 echo "Nom : " . $profil["nom"] . "<br>";
                                 echo "Prenom : " . $profil["prenom"] . "<br>";
+                                echo "Login : " . $profil["login"] . "<br>";
                                 echo "Adresse : " . $profil["adresse"] . " " . $profil["codePostal"] . " " . $profil["ville"] . "<br>";
                                 echo "Email : " . $profil["email"] . "<br>";
                                 echo "Téléphone : " . $profil["tel"] . "<br>";
